@@ -281,9 +281,16 @@ Este proyecto fue desarrollado con fines académicos para aplicar conocimientos 
 
 ## Autores
 
-**Equipo de desarrollo**
+- **Flores Vela Edgar Omar**
+- **Gonzalez Falfan Bladimir**
+- **Landa Velez Kevin**
+- **Ortega Garcia Leidy Yaret**
+- **Sandobal Reyna Ricardo Antonio**
+- **Facultad de Contaduria y administracion**
 
-Proyecto: **La Gran Familia**
+## Proyecto académico
+
+Proyecto desarrollado para la propuesta de sistema del negocio **"La Gran Familia"**, aplicando conocimientos de Programación Orientada a Objetos, Bases de Datos, Java, MySQL, JDBC y diseño UML.
 
 ## Licencia
 
