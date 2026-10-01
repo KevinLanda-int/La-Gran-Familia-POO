@@ -2,16 +2,18 @@
 
 ## Descripción
 
-La Gran Familia es un sistema de gestión desarrollado en Java para apoyar las operaciones de un negocio, permitiendo administrar productos, inventario, ventas y usuarios.
+**La Gran Familia** es un sistema de gestión desarrollado en Java para apoyar las operaciones de un negocio, permitiendo administrar productos, inventario, ventas y usuarios.
 
-El proyecto fue desarrollado aplicando los principios de la **Programación Orientada a Objetos (POO)**, utilizando una estructura organizada por módulos y clases para facilitar el mantenimiento y reutilización del código.
+El proyecto fue desarrollado aplicando los principios de la **Programación Orientada a Objetos (POO)**, utilizando una estructura organizada por paquetes y clases para facilitar el mantenimiento y la reutilización del código.
 
 ## Objetivo del proyecto
+
 Desarrollar una propuesta de sistema para el negocio **"La Gran Familia"**, que permita gestionar de manera organizada la información relacionada con productos, inventario, ventas y usuarios.
 
 El sistema busca facilitar el control de las operaciones principales del negocio mediante una aplicación desarrollada en Java y conectada a una base de datos.
 
 ## Tecnologías utilizadas
+
 - Java
 - Eclipse IDE
 - MySQL
@@ -22,6 +24,7 @@ El sistema busca facilitar el control de las operaciones principales del negocio
 - SQL
 
 ## Funcionalidades
+
 El sistema contempla las siguientes funcionalidades:
 
 - Gestión de productos.
@@ -37,6 +40,7 @@ El sistema contempla las siguientes funcionalidades:
 - Separación de responsabilidades mediante diferentes clases y paquetes.
 
 ## Estructura del proyecto
+
 El proyecto está organizado de la siguiente manera:
 
 ```text
@@ -72,6 +76,7 @@ LaGranFamilia/
 ├── DiagramaUML_LaGranFamilia.drawio
 ├── LaGranFamilia.zip
 └── README.md
+```
 
 ## Descripción de los paquetes
 
@@ -124,7 +129,7 @@ Este archivo contiene las instrucciones SQL necesarias para crear y configurar l
 
 ## Modelo UML
 
-El proyecto incluye un diagrama UML que representa la estructura y relaciones entre las principales clases del sistema.
+El proyecto incluye un diagrama UML que representa la estructura y las relaciones entre las principales clases del sistema.
 
 El archivo se encuentra en:
 
@@ -184,7 +189,11 @@ Descargar o clonar este repositorio desde GitHub.
 
 Abrir Eclipse y seleccionar:
 
-`File → Import → Existing Projects into Workspace`
+```text
+File
+→ Import
+→ Existing Projects into Workspace
+```
 
 Seleccionar la carpeta del proyecto.
 
@@ -212,7 +221,10 @@ Localizar la clase:
 
 y ejecutarla como una aplicación Java:
 
-`Run As → Java Application`
+```text
+Run As
+→ Java Application
+```
 
 ## Archivos incluidos
 
@@ -225,7 +237,7 @@ y ejecutarla como una aplicación Java:
 
 ## Arquitectura del proyecto
 
-El sistema se encuentra organizado en diferentes capas y paquetes para separar las responsabilidades:
+El sistema se encuentra organizado en diferentes paquetes para separar las responsabilidades:
 
 ```text
 Usuario
@@ -237,3 +249,42 @@ Modelo
 BD
    ↓
 MySQL
+```
+
+Esta organización permite mantener el código ordenado y facilita futuras modificaciones y ampliaciones del sistema.
+
+## Posibles mejoras
+
+Entre las posibles mejoras futuras del proyecto se encuentran:
+
+- Implementación de una interfaz gráfica completa.
+- Sistema de inicio de sesión.
+- Control de permisos según el tipo de usuario.
+- Generación de reportes.
+- Generación de tickets de venta.
+- Implementación de búsquedas avanzadas.
+- Mejoras en la validación de datos.
+- Implementación de respaldos automáticos de la base de datos.
+- Mejoras en la seguridad de la conexión a la base de datos.
+
+## Proyecto académico
+
+Este proyecto fue desarrollado con fines académicos para aplicar conocimientos relacionados con:
+
+- Programación Orientada a Objetos.
+- Bases de Datos.
+- Java.
+- MySQL.
+- JDBC.
+- Diseño UML.
+- Desarrollo de sistemas.
+
+## Autores
+
+**Equipo de desarrollo**
+
+Proyecto: **La Gran Familia**
+
+## Licencia
+
+Proyecto desarrollado con fines académicos.
