@@ -286,7 +286,7 @@ Este proyecto fue desarrollado con fines académicos para aplicar conocimientos 
 - **Landa Velez Kevin**
 - **Ortega Garcia Leidy Yaret**
 - **Sandobal Reyna Ricardo Antonio**
-- **Facultad de Contaduria y administracion**
+- **Facultad de Contaduria y administracion UV**
 
 ## Proyecto académico
 
