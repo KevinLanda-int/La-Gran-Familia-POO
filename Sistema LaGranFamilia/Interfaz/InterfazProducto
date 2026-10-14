@@ -1,0 +1,187 @@
+package Interfaz;
+
+import java.util.ArrayList;
+
+import Modelo.Producto;
+import Servicios.InventarioServicio;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JTable;
+
+public class InterfazProducto extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textNombre;
+	private JTextField textPrecio;
+	private JTextField textStock;
+	private JTable tableProductos;
+	private InventarioServicio inventario;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InterfazProducto frame = new InterfazProducto();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public InterfazProducto() {
+		inventario = new InventarioServicio();
+		
+		setTitle("La Gran Familia");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 598, 394);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
+		contentPane.setForeground(new Color(0, 0, 0));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblLaGranFamilia = new JLabel("La Gran Familia");
+		lblLaGranFamilia.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLaGranFamilia.setFont(new Font("Stencil", Font.PLAIN, 20));
+		lblLaGranFamilia.setBounds(210, 10, 179, 28);
+		contentPane.add(lblLaGranFamilia);
+		
+		JLabel lblNombre = new JLabel("Nombre: ");
+		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNombre.setBounds(33, 67, 105, 20);
+		contentPane.add(lblNombre);
+		
+		JLabel lblPrecio = new JLabel("Precio: ");
+		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPrecio.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPrecio.setBounds(33, 107, 105, 20);
+		contentPane.add(lblPrecio);
+		
+		JLabel lblStock = new JLabel("Stock: ");
+		lblStock.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStock.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblStock.setBounds(33, 147, 105, 20);
+		contentPane.add(lblStock);
+		
+		textNombre = new JTextField();
+		textNombre.setBounds(136, 71, 260, 18);
+		contentPane.add(textNombre);
+		textNombre.setColumns(10);
+		
+		textPrecio = new JTextField();
+		textPrecio.setColumns(10);
+		textPrecio.setBounds(136, 111, 260, 18);
+		contentPane.add(textPrecio);
+		
+		textStock = new JTextField();
+		textStock.setColumns(10);
+		textStock.setBounds(136, 151, 260, 18);
+		contentPane.add(textStock);
+		
+		JButton btnRegistrar = new JButton("Registrar producto");
+		btnRegistrar.setForeground(Color.BLACK);
+		btnRegistrar.setBackground(new Color(204, 204, 0));
+		btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnRegistrar.setBounds(406, 71, 168, 36);
+		contentPane.add(btnRegistrar);
+		
+		btnRegistrar.addActionListener(e -> {
+
+		    try {
+
+		        String nombre = textNombre.getText();
+		        double precio = Double.parseDouble(textPrecio.getText());
+		        int stock = Integer.parseInt(textStock.getText());
+
+		        if (nombre.isEmpty()) {
+
+		            JOptionPane.showMessageDialog(
+		                this,
+		                "Ingrese el nombre del producto."
+		            );
+
+		            return;
+		        }
+
+		        inventario.registrarProducto(nombre, precio, stock);
+
+		        JOptionPane.showMessageDialog(
+		            this,
+		            "Producto registrado correctamente."
+		        );
+
+		        textNombre.setText("");
+		        textPrecio.setText("");
+		        textStock.setText("");
+
+		    } catch (NumberFormatException ex) {
+
+		        JOptionPane.showMessageDialog(
+		            this,
+		            "Precio y stock deben ser valores numericos."
+		        );
+		    }
+		});
+		
+		JButton btnConsultar = new JButton("Consultar Inventario");
+		btnConsultar.setForeground(Color.BLACK);
+		btnConsultar.setBackground(new Color(204, 204, 0));
+		btnConsultar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnConsultar.setBounds(406, 128, 168, 36);
+		contentPane.add(btnConsultar);
+		
+		btnConsultar.addActionListener(e -> {
+
+		    ArrayList<Producto> productos = inventario.consultarProductos();
+
+		    DefaultTableModel modelo = new DefaultTableModel();
+
+		    modelo.addColumn("ID");
+		    modelo.addColumn("Nombre");
+		    modelo.addColumn("Precio");
+		    modelo.addColumn("Stock");
+
+		    for (Producto producto : productos) {
+
+		        Object[] fila = {
+		            producto.getId_producto(),
+		            producto.getNombre(),
+		            producto.getPrecio(),
+		            producto.getStock()
+		        };
+
+		        modelo.addRow(fila);
+		    }
+
+		    tableProductos.setModel(modelo);
+		});
+		
+		tableProductos = new JTable();
+		tableProductos.setBounds(33, 221, 456, 94);
+		contentPane.add(tableProductos);
+
+	}
+}
