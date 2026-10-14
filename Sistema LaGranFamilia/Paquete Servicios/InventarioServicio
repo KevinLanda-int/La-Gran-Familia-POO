@@ -1,0 +1,27 @@
+package Servicios;
+
+import java.util.ArrayList;
+
+import BD.ProductoBD;
+import Modelo.Producto;
+
+public class InventarioServicio {
+
+    private ProductoBD productoBD;
+
+    public InventarioServicio() {
+        productoBD = new ProductoBD();
+    }
+
+    public void registrarProducto(String nombre, double precio, int stock) {
+
+        Producto producto = new Producto(nombre, precio, stock);
+
+        productoBD.registrarProducto(producto);
+    }
+
+    public ArrayList<Producto> consultarProductos() {
+
+        return productoBD.consultarProductos();
+    }
+}
