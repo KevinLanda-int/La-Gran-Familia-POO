@@ -1,0 +1,361 @@
+
+package Interfaz;
+
+import java.util.ArrayList;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
+import Modelo.Producto;
+import Servicios.InventarioServicio;
+
+public class InterfazProducto extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+
+    private JPanel contentPane;
+    private JTextField textNombre;
+    private JTextField textPrecio;
+    private JTextField textStock;
+    private JTable tableProductos;
+    private InventarioServicio inventario;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                InterfazProducto frame = new InterfazProducto();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public InterfazProducto() {
+
+        inventario = new InventarioServicio();
+
+        setTitle("La Gran Familia");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 598, 450);
+        setLocationRelativeTo(null);
+
+        contentPane = new JPanel();
+        contentPane.setBackground(Color.ORANGE);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel lblLaGranFamilia = new JLabel("La Gran Familia");
+        lblLaGranFamilia.setHorizontalAlignment(SwingConstants.CENTER);
+        lblLaGranFamilia.setFont(new Font("Stencil", Font.PLAIN, 20));
+        lblLaGranFamilia.setBounds(190, 10, 220, 28);
+        contentPane.add(lblLaGranFamilia);
+
+        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblNombre.setBounds(33, 67, 105, 20);
+        contentPane.add(lblNombre);
+
+        JLabel lblPrecio = new JLabel("Precio:");
+        lblPrecio.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblPrecio.setBounds(33, 107, 105, 20);
+        contentPane.add(lblPrecio);
+
+        JLabel lblStock = new JLabel("Stock:");
+        lblStock.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblStock.setBounds(33, 147, 105, 20);
+        contentPane.add(lblStock);
+
+        textNombre = new JTextField();
+        textNombre.setBounds(136, 71, 250, 22);
+        contentPane.add(textNombre);
+
+        textPrecio = new JTextField();
+        textPrecio.setBounds(136, 111, 250, 22);
+        contentPane.add(textPrecio);
+
+        textStock = new JTextField();
+        textStock.setBounds(136, 151, 250, 22);
+        contentPane.add(textStock);
+
+        JButton btnRegistrar = new JButton("Registrar producto");
+        btnRegistrar.setForeground(Color.BLACK);
+        btnRegistrar.setBackground(new Color(204, 204, 0));
+        btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnRegistrar.setBounds(396, 65, 176, 36);
+        contentPane.add(btnRegistrar);
+
+        JButton btnConsultar = new JButton("Consultar inventario");
+        btnConsultar.setForeground(Color.BLACK);
+        btnConsultar.setBackground(new Color(204, 204, 0));
+        btnConsultar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnConsultar.setBounds(396, 108, 176, 36);
+        contentPane.add(btnConsultar);
+
+        JButton btnModificar = new JButton("Modificar producto");
+        btnModificar.setForeground(Color.BLACK);
+        btnModificar.setBackground(new Color(204, 204, 0));
+        btnModificar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnModificar.setBounds(396, 151, 176, 36);
+        contentPane.add(btnModificar);
+
+        JButton btnEliminar = new JButton("Eliminar producto");
+        btnEliminar.setForeground(Color.BLACK);
+        btnEliminar.setBackground(new Color(204, 204, 0));
+        btnEliminar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnEliminar.setBounds(396, 194, 176, 36);
+        contentPane.add(btnEliminar);
+
+        JButton btnLimpiar = new JButton("Limpiar campos");
+        btnLimpiar.setForeground(Color.BLACK);
+        btnLimpiar.setBackground(new Color(204, 204, 0));
+        btnLimpiar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnLimpiar.setBounds(136, 190, 180, 30);
+        contentPane.add(btnLimpiar);
+
+        DefaultTableModel modelo = new DefaultTableModel(
+            new Object[]{"ID", "Nombre", "Precio", "Stock"}, 0) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+
+        tableProductos = new JTable(modelo);
+        tableProductos.setSelectionMode(
+            ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane scrollTabla = new JScrollPane(tableProductos);
+        scrollTabla.setBounds(33, 245, 539, 145);
+        contentPane.add(scrollTabla);
+
+        // Seleccionar un producto para cargar sus datos
+        tableProductos.getSelectionModel().addListSelectionListener(e -> {
+
+            if (!e.getValueIsAdjusting()) {
+
+                int fila = tableProductos.getSelectedRow();
+
+                if (fila != -1) {
+                    textNombre.setText(
+                        tableProductos.getValueAt(fila, 1).toString());
+
+                    textPrecio.setText(
+                        tableProductos.getValueAt(fila, 2).toString());
+
+                    textStock.setText(
+                        tableProductos.getValueAt(fila, 3).toString());
+                }
+            }
+        });
+
+        // Registrar producto
+        btnRegistrar.addActionListener(e -> {
+
+            String nombre = textNombre.getText().trim();
+
+            try {
+
+                if (nombre.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                        this, "Ingrese el nombre del producto.");
+                    return;
+                }
+
+                double precio = Double.parseDouble(
+                    textPrecio.getText().trim().replace(',', '.'));
+
+                int stock = Integer.parseInt(
+                    textStock.getText().trim());
+
+                if (!Double.isFinite(precio) ||
+                    precio <= 0 || stock < 0) {
+
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "El precio debe ser mayor que cero y el stock no puede ser negativo.");
+                    return;
+                }
+
+                inventario.registrarProducto(nombre, precio, stock);
+
+                JOptionPane.showMessageDialog(
+                    this, "Solicitud de registro realizada.");
+
+                limpiarCampos();
+                cargarTabla();
+
+            } catch (NumberFormatException ex) {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese un precio válido y un stock entero.");
+            }
+        });
+
+        // Consultar inventario
+        btnConsultar.addActionListener(e -> cargarTabla());
+
+        // Modificar producto seleccionado
+        btnModificar.addActionListener(e -> {
+
+            int fila = tableProductos.getSelectedRow();
+
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(
+                    this, "Seleccione un producto de la tabla.");
+                return;
+            }
+
+            try {
+
+                int id = Integer.parseInt(
+                    tableProductos.getValueAt(fila, 0).toString());
+
+                String nombre = textNombre.getText().trim();
+
+                if (nombre.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                        this, "El nombre no puede estar vacío.");
+                    return;
+                }
+
+                double precio = Double.parseDouble(
+                    textPrecio.getText().trim().replace(',', '.'));
+
+                int stock = Integer.parseInt(
+                    textStock.getText().trim());
+
+                if (!Double.isFinite(precio) ||
+                    precio <= 0 || stock < 0) {
+
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "El precio debe ser mayor que cero y el stock no puede ser negativo.");
+                    return;
+                }
+
+                boolean modificado = inventario.modificarProducto(
+                    id, nombre, precio, stock);
+
+                if (modificado) {
+
+                    JOptionPane.showMessageDialog(
+                        this, "Producto modificado correctamente.");
+
+                    limpiarCampos();
+                    cargarTabla();
+
+                } else {
+
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "No se pudo modificar el producto. Revise la conexión y los datos.");
+                }
+
+            } catch (NumberFormatException ex) {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrese un precio válido y un stock entero.");
+            }
+        });
+
+        // Eliminar producto seleccionado
+        btnEliminar.addActionListener(e -> {
+
+            int fila = tableProductos.getSelectedRow();
+
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(
+                    this, "Seleccione el producto que desea eliminar.");
+                return;
+            }
+
+            int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que desea eliminar este producto?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            int id = Integer.parseInt(
+                tableProductos.getValueAt(fila, 0).toString());
+
+            boolean eliminado = inventario.eliminarProducto(id);
+
+            if (eliminado) {
+
+                JOptionPane.showMessageDialog(
+                    this, "Producto eliminado correctamente.");
+
+                limpiarCampos();
+                cargarTabla();
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo eliminar el producto. Puede tener registros relacionados o existir un error de conexión.");
+            }
+        });
+
+        // Limpiar campos y selección
+        btnLimpiar.addActionListener(e -> limpiarCampos());
+
+        // Mostrar inventario al abrir la ventana
+        cargarTabla();
+    }
+
+    private void cargarTabla() {
+
+        ArrayList<Producto> productos =
+            inventario.consultarProductos();
+
+        DefaultTableModel modelo =
+            (DefaultTableModel) tableProductos.getModel();
+
+        modelo.setRowCount(0);
+
+        for (Producto producto : productos) {
+
+            modelo.addRow(new Object[]{
+                producto.getId_producto(),
+                producto.getNombre(),
+                producto.getPrecio(),
+                producto.getStock()
+            });
+        }
+    }
+
+    private void limpiarCampos() {
+
+        textNombre.setText("");
+        textPrecio.setText("");
+        textStock.setText("");
+
+        tableProductos.clearSelection();
+        textNombre.requestFocus();
+    }
+}
