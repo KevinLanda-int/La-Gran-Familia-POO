@@ -121,7 +121,7 @@ CREATE TABLE `usuarios_login` (
 
 LOCK TABLES `usuarios_login` WRITE;
 /*!40000 ALTER TABLE `usuarios_login` DISABLE KEYS */;
-INSERT INTO `usuarios_login` VALUES (1,'admin','1234'),(2,'Kevin','LandaK'),(3,'Ricardo','SandobalR'),(4,'Edgar','FloresE'),(5,'Santiago','AnellS'),(6,'Bladimir','GonzalezB'),(7,'Leidy','Leidy34');
+INSERT INTO `usuarios_login` VALUES (1,'admin','1234'),(2,'Kevin','LandaK'),(3,'Ricardo','SandobalR'),(4,'Edgar','FloresE'),(6,'Bladimir','GonzalezB'),(7,'Leidy','Leidy34');
 /*!40000 ALTER TABLE `usuarios_login` ENABLE KEYS */;
 UNLOCK TABLES;
 
