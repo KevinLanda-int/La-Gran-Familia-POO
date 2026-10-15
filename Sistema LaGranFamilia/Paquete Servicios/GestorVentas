@@ -1,0 +1,40 @@
+package Servicios;
+
+public class GestorVentas {
+	 private VentaServicio venta;
+
+	    public void realizarVenta(String producto, int cantidad, double precio) {
+
+	        if (producto == null || producto.trim().isEmpty()
+	                || cantidad <= 0 || precio < 0) {
+	            System.out.println("Datos de venta no validos.");
+	            return;
+	        }
+
+	        int folio;
+
+	        if (venta == null) {
+	            folio = 1;
+	        } else {
+	            folio = venta.getFolio() + 1;
+	        }
+
+	        venta = new VentaServicio(folio, producto, cantidad, precio);
+
+	        System.out.println("Venta realizada correctamente.");
+	        venta.mostrarVenta();
+	    }
+
+	    public void consultarVenta(int folio) {
+
+	        if (venta != null && venta.getFolio() == folio) {
+	            System.out.println("--- VENTA ENCONTRADA ---");
+	            venta.mostrarVenta();
+	        } else {
+	            System.out.println("No se encontro la venta.");
+	        }
+	    }
+	}
+
+
+
