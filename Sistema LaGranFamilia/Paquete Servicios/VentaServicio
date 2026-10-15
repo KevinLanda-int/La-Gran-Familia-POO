@@ -1,0 +1,53 @@
+package Servicios;
+
+public class VentaServicio {
+	private int folio;
+    private String producto;
+    private int cantidad;
+    private double precio;
+    private double total;
+    
+    //constructor
+    public VentaServicio(int folio, String producto, int cantidad, double precio) {
+        this.folio = folio;
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.total = cantidad * precio;
+    }
+
+    //get
+    public int getFolio() {
+        return folio;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    //metodo
+    public void mostrarVenta() {
+        System.out.println("Folio: " + folio);
+        System.out.println("Producto: " + producto);
+        System.out.println("Cantidad: " + cantidad);
+        System.out.println("Precio unitario: $" + precio);
+        System.out.println("Total de la venta: $" + total);
+    }
+}
+
+
+
+
+
