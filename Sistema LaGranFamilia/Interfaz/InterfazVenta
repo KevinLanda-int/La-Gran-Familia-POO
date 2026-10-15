@@ -1,0 +1,178 @@
+package Interfaz;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import Servicios.GestorVentas;
+
+public class Ventas extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+
+    private JPanel contentPaneTotal;
+    private JTextField textProducto;
+    private JTextField textCantidad;
+    private JTextField textPrecio;
+    private JTextField textTotal1;
+
+    // Conectar la interfaz con el gestor
+    private GestorVentas gestor = new GestorVentas();
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                Ventas frame = new Ventas();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public Ventas() {
+
+        setTitle("La Gran Familia");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 625, 397);
+        setLocationRelativeTo(null);
+
+        contentPaneTotal = new JPanel();
+        contentPaneTotal.setBackground(new Color(248, 221, 71));
+        contentPaneTotal.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPaneTotal);
+        contentPaneTotal.setLayout(null);
+
+        JLabel lblGF = new JLabel("LA GRAN FAMILIA");
+        lblGF.setForeground(Color.BLACK);
+        lblGF.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+        lblGF.setBounds(196, 23, 233, 25);
+        contentPaneTotal.add(lblGF);
+
+        JLabel lblProductos = new JLabel("Producto:");
+        lblProductos.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+        lblProductos.setBounds(10, 88, 83, 25);
+        contentPaneTotal.add(lblProductos);
+
+        textProducto = new JTextField();
+        textProducto.setBounds(88, 90, 341, 27);
+        contentPaneTotal.add(textProducto);
+        textProducto.setColumns(10);
+
+        JLabel lblCantidad = new JLabel("Cantidad:");
+        lblCantidad.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+        lblCantidad.setBounds(10, 140, 80, 24);
+        contentPaneTotal.add(lblCantidad);
+
+        textCantidad = new JTextField();
+        textCantidad.setBounds(88, 142, 341, 25);
+        contentPaneTotal.add(textCantidad);
+
+        JLabel lblPrecio = new JLabel("Precio:");
+        lblPrecio.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+        lblPrecio.setBounds(16, 194, 62, 24);
+        contentPaneTotal.add(lblPrecio);
+
+        textPrecio = new JTextField();
+        textPrecio.setBounds(88, 196, 341, 25);
+        contentPaneTotal.add(textPrecio);
+
+        JButton btnRegistrarVenta = new JButton("Registrar Venta");
+        btnRegistrarVenta.setBackground(new Color(0, 128, 128));
+        btnRegistrarVenta.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        btnRegistrarVenta.setBounds(445, 129, 156, 48);
+        contentPaneTotal.add(btnRegistrarVenta);
+
+        textTotal1 = new JTextField();
+        textTotal1.setBounds(175, 296, 265, 31);
+        textTotal1.setEditable(false);
+        contentPaneTotal.add(textTotal1);
+
+        JButton btnTotal = new JButton("Total");
+        btnTotal.setForeground(new Color(0, 128, 128));
+        btnTotal.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        btnTotal.setBounds(235, 261, 138, 25);
+        contentPaneTotal.add(btnTotal);
+
+        // CONECTAR LOS BOTONES CON SUS FUNCIONES
+        btnTotal.addActionListener(e -> calcularTotal());
+
+        btnRegistrarVenta.addActionListener(e -> registrarVenta());
+    }
+
+    // FUNCION DEL BOTON TOTAL
+    private void calcularTotal() {
+        try {
+            int cantidad = Integer.parseInt(textCantidad.getText().trim());
+            double precio = Double.parseDouble(
+                textPrecio.getText().trim().replace(",", ".")
+            );
+
+            if (cantidad <= 0 || precio <= 0
+                    || !Double.isFinite(precio)) {
+                JOptionPane.showMessageDialog(
+                    this, "La cantidad y el precio deben ser mayores que cero."
+                );
+                return;
+            }
+
+            double total = cantidad * precio;
+
+            textTotal1.setText(String.format("$%.2f", total));
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this, "Escribe una cantidad entera y un precio válido."
+            );
+        }
+    }
+
+    // FUNCION DEL BOTON REGISTRAR VENTA
+    private void registrarVenta() {
+        try {
+            String producto = textProducto.getText().trim();
+            int cantidad = Integer.parseInt(textCantidad.getText().trim());
+
+            double precio = Double.parseDouble(
+                textPrecio.getText().trim().replace(",", ".")
+            );
+
+            if (producto.isEmpty() || cantidad <= 0 || precio <= 0
+                    || !Double.isFinite(precio)) {
+                JOptionPane.showMessageDialog(
+                    this, "Completa los campos con datos válidos."
+                );
+                return;
+            }
+
+            // Llamar a la clase GestorVentas
+            gestor.realizarVenta(producto, cantidad, precio);
+
+            // Mostrar el total en la interfaz
+            double total = cantidad * precio;
+            textTotal1.setText(String.format("$%.2f", total));
+
+            JOptionPane.showMessageDialog(
+                this,
+                "¡Venta registrada correctamente!\n\n" +
+                "Producto: " + producto + "\n" +
+                "Cantidad: " + cantidad + "\n" +
+                String.format("Precio: $%.2f%n", precio) +
+                String.format("Total: $%.2f", total)
+            );
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this, "Verifica que la cantidad y el precio sean números válidos."
+            );
+        }
+    }
+}
